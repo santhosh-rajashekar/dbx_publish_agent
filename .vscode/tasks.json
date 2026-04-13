@@ -1,0 +1,24 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run MCP connectivity test",
+			"type": "shell",
+			"command": "${command:python.interpreterPath}",
+			"args": [
+				"test_mcp_connection.py"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Run C-level provisioner dry test",
+			"type": "shell",
+			"command": "${command:python.interpreterPath}",
+			"args": [
+				"provision_clevel_artifacts.py",
+				"--skip-mcp-test"
+			],
+			"isBackground": false
+		}
+	]
+}

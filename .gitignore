@@ -1,0 +1,8 @@
+.vscode/*
+!.vscode/tasks.json
+_mcp_debug.py
+_mcp_poll_loop.py
+_mcp_poll_bg.py
+_mcp_poll_existing.py
+.venv
+.env
