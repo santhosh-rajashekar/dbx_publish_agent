@@ -5,7 +5,7 @@ This guide helps colleagues set up and use the Databricks Genie MCP workflow fro
 ## 0. Quick Start In VS Code
 
 1. Open this workspace in VS Code.
-2. Set `DATABRICKS_HOST`, `DATABRICKS_TOKEN`, and `GENIE_SPACE_ID` in your shell.
+2. Create a local `.env` file from `.env.example` and set `DATABRICKS_HOST`, `DATABRICKS_TOKEN`, and `GENIE_SPACE_ID`.
 3. Run the task `Run MCP connectivity test`.
 4. Open Copilot Chat and select the `c-level-databricks` agent profile.
 5. Ask a scoped business question with metric, time range, and segment.
@@ -41,11 +41,13 @@ Expected answer structure:
 
 ## 3. Environment Variables
 
-Set these in your shell environment before running tests/scripts:
+Set these in your local `.env` file before running tests/scripts:
 
 - `DATABRICKS_HOST` (example: `https://adb-xxxx.x.azuredatabricks.net`)
 - `DATABRICKS_TOKEN` (your PAT)
-- `GENIE_SPACE_ID` (optional if defaults are already configured in scripts)
+- `GENIE_SPACE_ID` (required)
+- `AZURE_SUBSCRIPTION_ID` (optional)
+- `AZURE_RESOURCE_GROUP` (optional)
 
 ### Example (PowerShell)
 
@@ -53,6 +55,16 @@ Set these in your shell environment before running tests/scripts:
 $env:DATABRICKS_HOST="https://adb-xxxx.x.azuredatabricks.net"
 $env:DATABRICKS_TOKEN="<your_pat>"
 $env:GENIE_SPACE_ID="<your_genie_space_id>"
+```
+
+### Example (.env)
+
+```dotenv
+DATABRICKS_HOST=https://adb-xxxx.x.azuredatabricks.net
+DATABRICKS_TOKEN=<your_pat>
+GENIE_SPACE_ID=<your_genie_space_id>
+AZURE_SUBSCRIPTION_ID=<your_subscription_id>
+AZURE_RESOURCE_GROUP=<your_resource_group>
 ```
 
 ## 4. Required First Validation

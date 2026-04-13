@@ -32,7 +32,7 @@ def load_setting(name: str) -> str:
     return ""
 
 def load_token() -> str:
-    """Prefer process env var, fallback to .env, then prompt."""
+    """Prefer process env var, fallback to .env."""
     token = os.environ.get("DATABRICKS_TOKEN", "").strip().strip('"')
     if token:
         return token
@@ -46,12 +46,14 @@ def load_token() -> str:
             if stripped.startswith("DATABRICKS_TOKEN="):
                 return stripped.split("=", 1)[1].strip().strip('"')
 
-    return input("Enter your Databricks PAT: ").strip()
+    return ""
 
 
 TOKEN = load_token()
 WORKSPACE = load_setting("DATABRICKS_HOST").rstrip("/")
 GENIE_SPACE_ID = load_setting("GENIE_SPACE_ID")
+if not TOKEN:
+    raise RuntimeError("Missing DATABRICKS_TOKEN. Set env var or .env entry.")
 if not WORKSPACE:
     raise RuntimeError("Missing DATABRICKS_HOST. Set env var or .env entry.")
 if not GENIE_SPACE_ID:

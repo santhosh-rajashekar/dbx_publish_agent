@@ -1,8 +1,13 @@
 Databricks workspace provisioning details are environment-specific.
-Set these values via environment variables or a local .env file:
+Store these values in a local `.env` file (recommended):
 
 - DATABRICKS_HOST=https://adb-xxxx.x.azuredatabricks.net
 - GENIE_SPACE_ID=<your_genie_space_id>
+- DATABRICKS_TOKEN=<your_pat>
+
+Optional Azure context values:
+- AZURE_SUBSCRIPTION_ID=<your_subscription_id>
+- AZURE_RESOURCE_GROUP=<your_resource_group>
 
 The MCP endpoint format is:
 https://<databricks-host>/api/2.0/mcp/genie/<genie-space-id>
@@ -13,6 +18,10 @@ https://medium.com/@ryan-bates/microsoft-teams-meets-databricks-genie-api-a-comp
 Follow the instructions in this Microsoft Documentation to provision the resources needed within Azure and Databricks so that Agents & MCP server can be used outside Azure and Databricsk workspace
 Link to Microsoft documentation 
 https://learn.microsoft.com/en-us/azure/databricks/generative-ai/agent-framework/teams-agent
+
+Reference GitHub repo which is doing similar things is here
+https://github.com/nkvuong/DatabricksGenieBOT
+Additionally, this includes the logic of generating the zip folder which needs to be imported in Team apps
 
 You can consider my token from az login to provision the resource needed, and make sure i have access to those resources.
 
@@ -27,13 +36,15 @@ This repository now includes automation to generate and validate Databricks work
 
 ### 1. Set environment variables
 
-Use either OS environment variables or a local .env file:
+Use a local `.env` file (see `.env.example`):
 
 DATABRICKS_HOST=https://adb-xxxx.x.azuredatabricks.net
 DATABRICKS_TOKEN=<your_pat>
+GENIE_SPACE_ID=<your_genie_space_id>
 
 Optional:
-GENIE_SPACE_ID=<your_genie_space_id>
+AZURE_SUBSCRIPTION_ID=<your_subscription_id>
+AZURE_RESOURCE_GROUP=<your_resource_group>
 
 ### 2. Run provisioning
 

@@ -14,7 +14,7 @@ Usage:
 
 Auth:
 - Uses DATABRICKS_TOKEN from environment or .env file.
-- Uses DATABRICKS_HOST from environment, defaults to the host in this repository.
+- Uses DATABRICKS_HOST and GENIE_SPACE_ID from environment or .env file.
 """
 
 from __future__ import annotations
@@ -28,8 +28,6 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-DEFAULT_HOST = "https://adb-7405616457611961.1.azuredatabricks.net"
-DEFAULT_GENIE_SPACE_ID = "01f12d64b7151a668a8a031bf5807560"
 DEFAULT_WORKSPACE_DIR = "/Shared/C_Level_Agent"
 
 
@@ -292,16 +290,21 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace-dir", default=DEFAULT_WORKSPACE_DIR)
     parser.add_argument("--host", default="")
-    parser.add_argument("--genie-space-id", default=DEFAULT_GENIE_SPACE_ID)
+    parser.add_argument("--genie-space-id", default="")
     parser.add_argument("--skip-mcp-test", action="store_true")
     args = parser.parse_args()
 
     env_values = load_env_file(Path(".env"))
     token = load_setting("DATABRICKS_TOKEN", env_values)
-    host = (args.host or load_setting("DATABRICKS_HOST", env_values, DEFAULT_HOST)).rstrip("/")
+    host = (args.host or load_setting("DATABRICKS_HOST", env_values)).rstrip("/")
+    genie_space_id = args.genie_space_id or load_setting("GENIE_SPACE_ID", env_values)
 
     if not token:
         raise RuntimeError("Missing DATABRICKS_TOKEN. Set env var or .env entry.")
+    if not host:
+        raise RuntimeError("Missing DATABRICKS_HOST. Set env var or .env entry.")
+    if not genie_space_id and not args.skip_mcp_test:
+        raise RuntimeError("Missing GENIE_SPACE_ID. Set env var/.env entry or pass --genie-space-id.")
 
     client = DatabricksClient(host=host, token=token)
 
@@ -325,7 +328,7 @@ def main() -> None:
     if args.skip_mcp_test:
         print("Skipped MCP test (--skip-mcp-test set).")
     else:
-        ok, message = test_mcp(client, host, args.genie_space_id)
+        ok, message = test_mcp(client, host, genie_space_id)
         if not ok:
             raise RuntimeError(message)
         print(message)
