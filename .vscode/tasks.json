@@ -19,6 +19,158 @@
 				"--skip-mcp-test"
 			],
 			"isBackground": false
+		},
+		{
+			"label": "Probe deployed POST",
+			"type": "shell",
+			"command": "c:/Users/srajashekar/git/dbx_publish_agent/.venv/Scripts/python.exe",
+			"args": [
+				"_probe_deployed_post.py"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Run resume e2e",
+			"type": "shell",
+			"command": "c:/Users/srajashekar/git/dbx_publish_agent/.venv/Scripts/python.exe",
+			"args": [
+				"_resume_e2e.py"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Run zipdeploy now",
+			"type": "shell",
+			"command": "c:/Users/srajashekar/git/dbx_publish_agent/.venv/Scripts/python.exe",
+			"args": [
+				"_zipdeploy.py"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Run directline bot test",
+			"type": "shell",
+			"command": "c:/Users/srajashekar/git/dbx_publish_agent/.venv/Scripts/python.exe",
+			"args": [
+				"-u",
+				"_test_bot_directline.py"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Deploy updated bot app",
+			"type": "shell",
+			"command": "C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin\\az.cmd",
+			"args": [
+				"webapp",
+				"deploy",
+				"--resource-group",
+				"rg-mslearn-dbricks-2026",
+				"--name",
+				"dbx-genie",
+				"--src-path",
+				"azure_bot_app.zip",
+				"--type",
+				"zip",
+				"--output",
+				"json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Check webapp deployment logs",
+			"type": "shell",
+			"command": "C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin\\az.cmd",
+			"args": [
+				"webapp",
+				"log",
+				"deployment",
+				"list",
+				"--name",
+				"dbx-genie",
+				"--resource-group",
+				"rg-mslearn-dbricks-2026",
+				"--output",
+				"json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Check latest deployment status",
+			"type": "shell",
+			"command": "C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin\\az.cmd",
+			"args": [
+				"webapp",
+				"log",
+				"deployment",
+				"list",
+				"--name",
+				"dbx-genie",
+				"--resource-group",
+				"rg-mslearn-dbricks-2026",
+				"--query",
+				"[0].{id:id,status:status,complete:complete,progress:progress}",
+				"--output",
+				"json"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Wait webapp deploy",
+			"type": "shell",
+			"command": "c:/Users/srajashekar/git/dbx_publish_agent/.venv/Scripts/python.exe",
+			"args": [
+				"-u",
+				"_wait_webapp_deploy.py"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Probe botshape deployed",
+			"type": "shell",
+			"command": "c:/Users/srajashekar/git/dbx_publish_agent/.venv/Scripts/python.exe",
+			"args": [
+				"_probe_botshape.py"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Check deploys concise",
+			"type": "shell",
+			"command": "C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin\\az.cmd",
+			"args": [
+				"webapp",
+				"log",
+				"deployment",
+				"list",
+				"--name",
+				"dbx-genie",
+				"--resource-group",
+				"rg-mslearn-dbricks-2026",
+				"--output",
+				"table"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "Disable SCM build",
+			"type": "shell",
+			"command": "C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin\\az.cmd",
+			"args": [
+				"webapp",
+				"config",
+				"appsettings",
+				"set",
+				"--name",
+				"dbx-genie",
+				"--resource-group",
+				"rg-mslearn-dbricks-2026",
+				"--settings",
+				"SCM_DO_BUILD_DURING_DEPLOYMENT=False",
+				"--output",
+				"none"
+			],
+			"isBackground": false
 		}
 	]
 }
